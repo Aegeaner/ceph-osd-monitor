@@ -1,3 +1,4 @@
 [submodule "ceph-dash"]
 	path = ceph-dash
 	url = git://github.com/Aegeaner/ceph-dash.git
+	branch = master
