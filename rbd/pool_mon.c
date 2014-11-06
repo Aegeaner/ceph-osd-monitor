@@ -44,8 +44,8 @@ int main(int argc, char **argv)
     int err;
 
     /* Initialize the cluster handle */
-    //err = rados_create2(&cluster, cluster_name, user_name, flags);
-    err - rados_create(&cluster, NULL);
+    err = rados_create2(&cluster, cluster_name, user_name, flags);
+    // err = rados_create(&cluster, NULL);
     error_print(err, "Couldn't create the cluster handle!", "Created a cluster handle.");
     
     /* Read a Ceph configuration file to configure the cluster handle. */
