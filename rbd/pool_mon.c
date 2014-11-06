@@ -22,7 +22,7 @@ void split_str(char *buf, int len)
     for(i=0; i<len; i++)
     {
         if(i>1 && buf[i-1]=='\0' && buf[i-2]=='\0')
-            buf[i] = -1;
+            buf[i-2] = -1;
     }
     
     for(i=0; i<len && buf[i]!=-1; i++)
@@ -30,7 +30,7 @@ void split_str(char *buf, int len)
         if(buf[i] == '\0')
             buf[i] = ',';
     }
-    buf[i-2] = '\0';
+    buf[i] = '\0';
 }
 
 int main(int argc, char **argv)
@@ -84,6 +84,7 @@ int main(int argc, char **argv)
         poolname = strtok(NULL, ",");
     }
 
+    /* Shut down the cluster */
     rados_shutdown(cluster);
     printf("[%s]: Cluster shut down.\n", APPNAME);
 }
