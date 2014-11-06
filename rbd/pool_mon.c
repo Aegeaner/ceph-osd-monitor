@@ -62,9 +62,28 @@ int main(int argc, char **argv)
     split_str(buf, 1024);
     error_print(err, "Cannot list pools!", buf);
 
-/*    {
-        printf("%s\n", poolname);
-        poolname = strtok(NULL, "\0\n\t");
+    /* List pool stats */
+    char *poolname = strtok(buf, ",");
+    while(poolname != NULL)
+    {
+        rados_ioctx_t io;
+        struct rados_pool_stat_t stats;
+        
+        err = rados_ioctx_create(cluster, poolname, &io);
+        error_print(err, "Cannot create IO context!", "IO context created.");
+
+        err = rados_ioctx_pool_stat(io, &stats);
+        error_print(err, "Cannot list pool stats!", "Pool stats listed.");
+
+        printf("[%s][%s]: Number of read: %llu\n", APPNAME, poolname, stats.num_rd);
+        printf("[%s][%s]: Number of read in kb: %llu\n", APPNAME, poolname, stats.num_rd_kb);
+        printf("[%s][%s]: Number of write: %llu\n", APPNAME, poolname, stats.num_wr);
+        printf("[%s][%s]: Number of write in kb: %llu\n", APPNAME, poolname, stats.num_wr_kb);
+
+        rados_ioctx_destroy(io);
+        poolname = strtok(NULL, ",");
     }
-*/
+
+    rados_shutdown(cluster);
+    printf("[%s]: Cluster shut down.\n", APPNAME);
 }
