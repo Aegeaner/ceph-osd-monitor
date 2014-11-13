@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 #include <rados/librados.h>
 
 char *APPNAME;
@@ -75,10 +76,10 @@ int main(int argc, char **argv)
         err = rados_ioctx_pool_stat(io, &stats);
         error_print(err, "Cannot list pool stats!", "Pool stats listed.");
 
-        printf("[%s][%s]: Number of read: %llu\n", APPNAME, poolname, stats.num_rd);
-        printf("[%s][%s]: Number of read in kb: %llu\n", APPNAME, poolname, stats.num_rd_kb);
-        printf("[%s][%s]: Number of write: %llu\n", APPNAME, poolname, stats.num_wr);
-        printf("[%s][%s]: Number of write in kb: %llu\n", APPNAME, poolname, stats.num_wr_kb);
+        printf("[%s][%s]: Number of read: %"PRIu64"\n", APPNAME, poolname, stats.num_rd);
+        printf("[%s][%s]: Number of read in kb: %"PRIu64"\n", APPNAME, poolname, stats.num_rd_kb);
+        printf("[%s][%s]: Number of write: %"PRIu64"\n", APPNAME, poolname, stats.num_wr);
+        printf("[%s][%s]: Number of write in kb: %"PRIu64"\n", APPNAME, poolname, stats.num_wr_kb);
 
         rados_ioctx_destroy(io);
         poolname = strtok(NULL, ",");
