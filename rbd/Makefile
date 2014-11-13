@@ -10,7 +10,7 @@ rbd_demo.o:
 	g++ -c rbd_demo.cc -o rbd_demo.o
 
 rbd_demo: rbd_demo.o helper.o
-	g++ rbd_demo.o helper.o -lrados -o rbd_demo
+	g++ rbd_demo.o helper.o -lrados -lrbd -o rbd_demo
 
 clean:
 	rm -rf *.o pool_mon rbd_demo
